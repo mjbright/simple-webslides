@@ -9,6 +9,13 @@ declare -a PHOTOS=(
     "static/images/park_small_dark.jpg"
 )
 
+declare -a BACKGROUNDS=(
+    "bg-black"
+    "bg-brown"
+    "bg-blue"
+    "bg-white"
+)
+
 process_template() {
     TEMPLATE=$1; shift
     OUTPUT=$1; shift
@@ -27,6 +34,7 @@ process_template() {
 	set -x
         sed -e "s/__WELCOME_MESSAGE__/$__WELCOME_MESSAGE__/g" \
             -e "s?__PHOTO__?$__PHOTO__?g" \
+            -e "s/__BACKGROUND_CLASS__/$__BACKGROUND_CLASS__/g" \
             -e "s/__TEXT_INTRO__/$__TEXT_INTRO__/g" < $TEMPLATE > $OUTPUT
 
 	set +x
@@ -48,6 +56,7 @@ while true; do
 
     IDX=$(($RANDOM % 4))
     __PHOTO__=${PHOTOS[$IDX]}
+    __BACKGROUND_CLASS__=${BACKGROUNDS[$IDX]}
 
     #[ $VERBOSE -gt 0 ] && { echo "__PHOTO__[$IDX]=$__PHOTO__"; }
 
