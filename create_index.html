@@ -1,0 +1,36 @@
+#!/bin/bash
+
+process_template() {
+    TEMPLATE=$1; shift
+    OUTPUT=$1; shift
+
+    [ ! -f $TEMPLATE ] && { echo "Error - no such file <$TEMPLATE>"; return 1; }
+
+    PROCESS=0
+    [ ! -f $OUTPUT ] && PROCESS=1
+    [ $TEMPLATE -nt $OUTPUT ] && PROCESS=1
+
+    if [ $PROCESS -ne 0 ]; then
+        sed -e "s/__WELCOME_MESSAGE__/$__WELCOME_MESSAGE__/g" \
+            -e "s/__TEXT_INTRO__/$__TEXT_INTRO__/g" < $TEMPLATE > $OUTPUT
+    fi
+}
+
+__WELCOME_MESSAGE__="Welcome Home !!"
+__TEXT_INTRO__="it's $(date)"
+
+while [ ! -z "$1" ]; do
+    
+done
+
+
+while true; do
+    __TEXT_INTRO__="it's $(date)"
+
+    process_template index.html.templ        index.html
+    process_template index_2page.html.templ  index_2page.html
+
+    sleep 1;
+done
+
+
